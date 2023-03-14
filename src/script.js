@@ -12,12 +12,58 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+const particlesGeometry = new THREE.BufferGeometry();
+const PARTICLE_COUNT = 500;
+const PARTICLE_SIZE = 0.05;
+const particles = new Float32Array(PARTICLE_COUNT * 3);
+for(let i = 0; i < PARTICLE_COUNT * 3; i++){ 
+    particles[i] = (Math.random() - 0.5) * 10;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
+const particlesMaterial = new THREE.PointsMaterial({ size: PARTICLE_SIZE}); // color: 0x00AC9F
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh)
+
+function createParticles(){
+    // create particles
+
+}
+
+
+function createCornerSpotlight(){
+    
+        // create spotlight
+    
+        // add spotlight to scene
+    
+        // create helper
+    
+        // add helper to scene
+    
+        // add gui controls for spotlight
+
+}
+
+
+function createLogo(){
+
+    // place logo in the center of the screen
+
+    // place text display above the logo
+
+
+}
+
+function createTestSphere(){
+  
+}
 
 const geometry = new THREE.SphereGeometry( 1 );
-const material = new THREE.MeshBasicMaterial()
+const material = new THREE.MeshBasicMaterial({size: 0.0005})
 material.color = new THREE.Color(0x00AC9F)
 const sphere = new THREE.Mesh(geometry,material)
-console.log(sphere)
 scene.add(sphere)
 
 
@@ -76,6 +122,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.setClearColor()
 
 /**
  * Animate
@@ -88,8 +135,10 @@ const tick = () =>
 
     const elapsedTime = clock.getElapsedTime()
 
-    // Update objects
-    sphere.rotation.y = .5 * elapsedTime
+    
+    //sphere.rotation.y = .5 * elapsedTime // Mesh Animation: Rotate the sphere
+
+    //particlesMesh.rotation.y = .4 * elapsedTime; // Particles Animation: Rotate the particles
 
     // Update Orbital Controls
     controls.update()
