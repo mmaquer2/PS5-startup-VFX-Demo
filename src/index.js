@@ -1,6 +1,23 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import {Renderer} from 'three/examples/jsm/postprocessing/RenderPass.js'
+
+
+// shader for god rays of light through fog
+const godRayShader = {
+
+
+    uniforms: {},
+
+    vertexShader: ``,
+    fragmentShader: ``
+}
+
+
+
 
 /**
  * Base
@@ -14,12 +31,32 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+
+//** create fog */
+const fogColor = new THREE.Color(0x000000);
+const nearFog = 1;
+const farFog = 100;
+scene.fog = new THREE.Fog(fogColor, nearFog, farFog);
+
+
 /**
  * Lights
  */
 
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
-scene.add(directionalLight)
+//const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
+//scene.add(directionalLight)
+
+
+const light = new THREE.SpotLight(0xffffff, 1);
+light.position.set(0, 10, 0);
+light.angle = Math.PI / 4;
+light.penumbra = 0.5;
+light.decay = 2;
+light.distance = 50;
+scene.add(light);
+const lightHelper = new THREE.SpotLightHelper(light);
+scene.add(lightHelper);
+
 
 /**
  * Objects
@@ -62,7 +99,14 @@ function createSpotLight(){
     spotLight.shadow.camera.far = 500;
     spotLight.shadow.camera.fov = 30;
 
-    scene.add(spotLight);
+    //scene.add(spotLight);
+}
+
+function createLineMath(){
+
+
+
+
 }
 
 const particleSetOne = []
@@ -72,6 +116,7 @@ function createParticles(){
 
 
 }
+
 
 
 
